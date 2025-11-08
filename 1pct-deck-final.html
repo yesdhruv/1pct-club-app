@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1% Club - Pitch Deck</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #f9fafb;
+            --surface: #ffffff;
+            --primary: #2563eb;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --text-dark: #374151;
+            --text-muted: #9ca3af;
+            --soft-blue: #eff6ff;
+            --soft-green: #f0fdf4;
+            --soft-gold: #fffbeb;
+            --soft-purple: #f5f3ff;
+            --soft-pink: #fdf2f8;
+            --soft-cyan: #ecfdf5;
+            --soft-orange: #fff7ed;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background: var(--bg);
+            color: var(--text-dark);
+            overflow: hidden;
+        }
+
+        .deck-container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .slide {
+            display: none;
+            height: 100vh;
+            padding: 60px 40px;
+            overflow-y: auto;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 16px 40px;
+            background: var(--surface);
+            border-bottom: 1px solid #f3f4f6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .slide-counter {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 16px;
+            z-index: 100;
+        }
+
+        .nav-btn {
+            background: var(--surface);
+            border: 1px solid #e5e7eb;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        .nav-btn:hover {
+            background: var(--soft-blue);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--text-dark);
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 32px;
+            text-align: center;
+            color: var(--text-dark);
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+        }
+
+        .subtitle {
+            font-size: 24px;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            font-weight: 400;
+        }
+
+        .quote {
+            font-size: 18px;
+            font-style: italic;
+            color: var(--text-muted);
+            margin: 16px 0;
+            padding-left: 16px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .stat-card {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 16px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 64px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .stat-text {
+            font-size: 16px;
+            color: var(--text-dark);
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .card {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-left: 4px solid;
+            transition: transform 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+        .card.blue { border-color: var(--soft-blue); background: var(--soft-blue); }
+        .card.green { border-color: var(--soft-green); background: var(--soft-green); }
+        .card.gold { border-color: var(--soft-gold); background: var(--soft-gold); }
+        .card.purple { border-color: var(--soft-purple); background: var(--soft-purple); }
+        .card.pink { border-color: var(--soft-pink); background: var(--soft-pink); }
+        .card.cyan { border-color: var(--soft-cyan); background: var(--soft-cyan); }
+        .card.orange { border-color: var(--soft-orange); background: var(--soft-orange); }
+
+        .card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-dark);
+        }
+
+        .card p {
+            font-size: 14px;
+            color: var(--text-dark);
+            margin: 0;
+        }
+
+        .icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin: 40px 0;
+        }
+
+        .comparison-box {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 32px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .comparison-box h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .comparison-box.left {
+            background: var(--soft-blue);
+        }
+
+        .comparison-box.right {
+            background: var(--soft-green);
+        }
+
+        .emoji {
+            font-size: 48px;
+            margin: 16px 0;
+        }
+
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            margin: 40px 0;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #e5e7eb;
+        }
+
+        .timeline-item {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 20px;
+            width: 22%;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .timeline-item.phase1 { background: var(--soft-blue); }
+        .timeline-item.phase2 { background: var(--soft-gold); }
+        .timeline-item.phase3 { background: var(--soft-green); }
+
+        .timeline-item h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+
+        .timeline-item p {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .centered {
+            text-align: center;
+        }
+
+        .centered h1 {
+            text-align: center;
+        }
+
+        .centered p {
+            text-align: center;
+        }
+
+        .cta-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 24px;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+        }
+
+        .cta-button.secondary {
+            background: var(--secondary);
+            margin-left: 12px;
+        }
+
+        .cta-button.secondary:hover {
+            background: #059669;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 32px;
+            flex-wrap: wrap;
+        }
+
+        .principles {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .principle {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .principle.blue { background: var(--soft-blue); }
+        .principle.green { background: var(--soft-green); }
+        .principle.gold { background: var(--soft-gold); }
+        .principle.purple { background: var(--soft-purple); }
+
+        .principle h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-dark);
+        }
+
+        .principle p {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 80px 20px 40px;
+            }
+
+            h1 {
+                font-size: 32px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .timeline::before {
+                display: none;
+            }
+
+            .timeline-item {
+                width: 100%;
+            }
+
+            .principles {
+                grid-template-columns: 1fr;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .cta-button {
+                width: 100%;
+            }
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--primary);
+            z-index: 101;
+        }
+    </style>
+</head>
+<body>
+    <div class="deck-container">
+        <div class="header">
+            <h1>1% Club</h1>
+            <div class="slide-counter"><span id="current">1</span> / 16</div>
+        </div>
+
+        <div class="progress-bar" id="progressBar"></div>
+
+        <!-- Slide 1: Cover -->
+        <div class="slide active centered">
+            <h1>1% Club</h1>
+            <p class="subtitle">Momentum over perfection</p>
+            <p style="font-size: 18px; color: var(--text-muted); margin-top: 40px;">For the burnout survivor</p>
+            <div class="button-group">
+                <a href="https://1pct-club-app.vercel.app" target="_blank" class="cta-button">See the Live App →</a>
+            </div>
+        </div>
+
+        <!-- Slide 2: Opportunity -->
+        <div class="slide">
+            <h2>The Market Signal</h2>
+            <div class="cards-grid">
+                <div class="stat-card" style="background: var(--soft-blue);">
+                    <div class="stat-number" style="color: var(--primary);">40%</div>
+                    <div class="stat-text">Duolingo loses 40% of users in month 2</div>
+                </div>
+                <div class="stat-card" style="background: var(--soft-green);">
+                    <div class="stat-number" style="color: var(--secondary);">1.5B</div>
+                    <div class="stat-text">People who've quit a habit app</div>
+                </div>
+                <div class="stat-card" style="background: var(--soft-gold);">
+                    <div class="stat-number" style="color: var(--accent);">300M</div>
+                    <div class="stat-text">Users in active recovery</div>
+                </div>
+            </div>
+            <p style="font-size: 20px; text-align: center; margin-top: 40px; font-style: italic; color: var(--text-muted);">What if the problem isn't motivation—it's anxiety?</p>
+        </div>
+
+        <!-- Slide 3: Why Users Quit -->
+        <div class="slide">
+            <h2>Why Users Really Quit</h2>
+            <div class="cards-grid">
+                <div class="card blue">
+                    <h3>🧘 Streak Anxiety</h3>
+                    <div class="quote">"I had a 347-day streak and missed one day. I deleted the app immediately."</div>
+                    <p><strong>Why:</strong> Reset feels like all progress erased</p>
+                </div>
+                <div class="card green">
+                    <h3>📱 Notification Fatigue</h3>
+                    <div class="quote">"It's 4am and I got a push: 'Your streak is on fire 🔥'"</div>
+                    <p><strong>Why:</strong> Feels manipulated, not motivated</p>
+                </div>
+                <div class="card pink">
+                    <h3>😰 Perfection Doesn't Scale</h3>
+                    <div class="quote">"Got sick for 3 days, streaks reset, didn't feel like restarting"</div>
+                    <p><strong>Why:</strong> Life happens; apps assume perfect compliance</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Competition -->
+        <div class="slide">
+            <h2>The Market Leaders</h2>
+            <div class="cards-grid">
+                <div class="card orange">
+                    <h3>🎮 Duolingo</h3>
+                    <p><strong>Strength:</strong> Engagement mastery</p>
+                    <p><strong>Fatal flaw:</strong> Streak anxiety by month 2</p>
+                </div>
+                <div class="card purple">
+                    <h3>🏰 Habitica</h3>
+                    <p><strong>Strength:</strong> Gamification depth</p>
+                    <p><strong>Fatal flaw:</strong> Too complex, 80% abandon week 2</p>
+                </div>
+                <div class="card cyan">
+                    <h3>📊 Strides/Streaks</h3>
+                    <p><strong>Strength:</strong> Beautiful iOS design</p>
+                    <p><strong>Fatal flaw:</strong> Still use streaks</p>
+                </div>
+                <div class="card green">
+                    <h3>✅ 1% Club</h3>
+                    <p><strong>Strength:</strong> Compounding momentum</p>
+                    <p><strong>Winner:</strong> Serves burnout survivors</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Research Findings -->
+        <div class="slide">
+            <h2>What Users Really Want</h2>
+            <div class="cards-grid">
+                <div class="card blue"><div class="icon">🧘</div><h3>Permission to be human</h3></div>
+                <div class="card green"><div class="icon">📱</div><h3>Respectful nudges</h3></div>
+                <div class="card purple"><div class="icon">👥</div><h3>Supportive community</h3></div>
+                <div class="card gold"><div class="icon">💭</div><h3>Emotional outcomes</h3></div>
+                <div class="card orange"><div class="icon">⭐</div><h3>Simplicity first</h3></div>
+                <div class="card pink"><div class="icon">💰</div><h3>Honest pricing</h3></div>
+                <div class="card cyan"><div class="icon">🔄</div><h3>Graceful restarts</h3></div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Solution -->
+        <div class="slide">
+            <h2>Compounding Momentum: The Core Insight</h2>
+            <div class="comparison">
+                <div class="comparison-box left">
+                    <h3>Traditional Streak</h3>
+                    <div class="emoji">📉</div>
+                    <p><strong>Reset = Shame = Abandon</strong></p>
+                </div>
+                <div class="comparison-box right">
+                    <h3>1% Club Momentum</h3>
+                    <div class="emoji">📈</div>
+                    <p><strong>Flatten = Graceful = Continue</strong></p>
+                </div>
+            </div>
+            <p style="text-align: center; font-size: 18px; margin-top: 40px; font-weight: 600;">Removes anxiety trigger. Enables guilt-free restart.</p>
+        </div>
+
+        <!-- Slide 7: Vision -->
+        <div class="slide centered">
+            <h2>A Calm Space for Quiet Growth</h2>
+            <p style="font-size: 20px; font-style: italic; margin: 40px 0;">Designed for overthinkers and burnout survivors who hate being nudged</p>
+            <div class="principles">
+                <div class="principle blue"><div class="icon">🎯</div><h3>Simplicity</h3><p>One habit at a time</p></div>
+                <div class="principle green"><div class="icon">🕊️</div><h3>Grace</h3><p>No punishment for breaks</p></div>
+                <div class="principle gold"><div class="icon">📈</div><h3>Momentum</h3><p>Feedback over rewards</p></div>
+                <div class="principle purple"><div class="icon">🤝</div><h3>Respect</h3><p>Nudges honor quiet hours</p></div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Features -->
+        <div class="slide">
+            <h2>Why Each Design Choice Removes Churn</h2>
+            <div class="cards-grid">
+                <div class="card blue"><div class="icon">📊</div><h3>Compounding Curve</h3><p><strong>Removes</strong> streak anxiety</p></div>
+                <div class="card purple"><div class="icon">🌙</div><h3>Quiet Hours</h3><p><strong>Respects</strong> sleep, builds trust</p></div>
+                <div class="card green"><div class="icon">👥</div><h3>Micro-Pods</h3><p><strong>Accountability</strong> without fatigue</p></div>
+                <div class="card gold"><div class="icon">💭</div><h3>Reflection Prompts</h3><p><strong>3.2x higher</strong> retention</p></div>
+                <div class="card orange"><div class="icon">⭐</div><h3>One Habit</h3><p><strong>Simplicity</strong> increases completion</p></div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Journey -->
+        <div class="slide centered">
+            <h2>How Users Experience 1% Club</h2>
+            <div class="timeline">
+                <div class="timeline-item phase1">
+                    <h4>📱 Onboarding</h4>
+                    <p>Pick habit → 30-day plan</p>
+                </div>
+                <div class="timeline-item phase2">
+                    <h4>📊 Daily</h4>
+                    <p>Complete action → curve updates</p>
+                </div>
+                <div class="timeline-item phase3">
+                    <h4>👥 Pods</h4>
+                    <p>Join peers → accountability</p>
+                </div>
+                <div class="timeline-item phase1">
+                    <h4>📈 Report</h4>
+                    <p>Reflection → consistency score</p>
+                </div>
+                <div class="timeline-item phase2">
+                    <h4>⭐ Paywall</h4>
+                    <p>Unlock Pro → multi-habit</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Growth Loop -->
+        <div class="slide">
+            <h2>How Retention Compounds Into Revenue</h2>
+            <div class="cards-grid">
+                <div class="card blue"><div class="emoji">7️⃣</div><h3>Day 7</h3><p>Referral unlock badge</p></div>
+                <div class="card green"><div class="emoji">📩</div><h3>Invite</h3><p>7-day Pro trial</p></div>
+                <div class="card gold"><div class="emoji">👥</div><h3>Pod</h3><p>Join together</p></div>
+                <div class="card purple"><div class="emoji">😌</div><h3>Report</h3><p>Felt calmer</p></div>
+                <div class="card orange"><div class="emoji">💳</div><h3>Upgrade</h3><p>Convert</p></div>
+            </div>
+            <p style="text-align: center; font-size: 16px; margin-top: 40px; font-weight: 600;">Repeat & Compound</p>
+        </div>
+
+        <!-- Slide 11: Metrics -->
+        <div class="slide centered">
+            <h2>How We'll Know It's Working</h2>
+            <div class="stat-card" style="background: var(--soft-green); max-width: 300px; margin: 40px auto;">
+                <div class="stat-number" style="color: var(--secondary);">65%</div>
+                <div class="stat-text">7-Day Active Retention</div>
+                <p style="font-size: 13px; color: var(--text-muted); margin-top: 8px;">Target: 65%+ by month 6</p>
+            </div>
+            <div class="cards-grid" style="max-width: 900px; margin: 40px auto;">
+                <div class="card blue"><h3>📊 Completion</h3><p>70%+ = Product-Market Fit</p></div>
+                <div class="card gold"><h3>💳 Conversion</h3><p>8%+ = Revenue Health</p></div>
+                <div class="card purple"><h3>😌 Emotion</h3><p>60%+ = Promise Delivery</p></div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Why We Win -->
+        <div class="slide">
+            <h2>Why Competitors Can't Copy This</h2>
+            <div class="cards-grid">
+                <div class="card orange">
+                    <h3>🔄 Philosophy Shift</h3>
+                    <p>Duolingo built on engagement. Changing to 'calm' = rethink entire business model</p>
+                </div>
+                <div class="card purple">
+                    <h3>👥 User Expectation</h3>
+                    <p>Existing users expect streaks. Adding 'calm' confuses market</p>
+                </div>
+                <div class="card cyan">
+                    <h3>🔗 Network Effects</h3>
+                    <p>Pods create switching costs. Hard to leave group accountability</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13: Roadmap -->
+        <div class="slide centered">
+            <h2>3-Phase Launch Strategy</h2>
+            <div class="timeline">
+                <div class="timeline-item phase1">
+                    <h4>📄 Phase 1</h4>
+                    <p>Landing page</p>
+                    <p style="font-size: 12px; margin-top: 8px;">Target: 500 emails</p>
+                </div>
+                <div class="timeline-item phase2">
+                    <h4>🧪 Phase 2</h4>
+                    <p>Closed beta</p>
+                    <p style="font-size: 12px; margin-top: 8px;">Target: 65% retention</p>
+                </div>
+                <div class="timeline-item phase3">
+                    <h4>🚀 Phase 3</h4>
+                    <p>Soft launch</p>
+                    <p style="font-size: 12px; margin-top: 8px;">Target: 8% conversion</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 14: Market -->
+        <div class="slide centered">
+            <h2>The Size of the Prize</h2>
+            <div class="cards-grid" style="max-width: 900px; margin: 40px auto;">
+                <div class="stat-card" style="background: var(--soft-blue);">
+                    <div class="stat-number" style="color: var(--primary);">1.5B</div>
+                    <div class="stat-text">TAM: People who quit habit apps</div>
+                </div>
+                <div class="stat-card" style="background: var(--soft-green);">
+                    <div class="stat-number" style="color: var(--secondary);">300M</div>
+                    <div class="stat-text">SAM: Users in recovery</div>
+                </div>
+                <div class="stat-card" style="background: var(--soft-gold);">
+                    <div class="stat-number" style="color: var(--accent);">5M</div>
+                    <div class="stat-text">SOM: Year 1 users</div>
+                </div>
+            </div>
+            <p style="font-size: 14px; margin-top: 40px; color: var(--text-muted);">Geographic focus: India + SE Asia</p>
+        </div>
+
+        <!-- Slide 15: Closing -->
+        <div class="slide centered">
+            <h1 style="font-size: 42px; margin-bottom: 32px;">This isn't just another habit tracker.</h1>
+            <p style="font-size: 20px; line-height: 1.8; margin-bottom: 32px;">It's built on empathy for inconsistency—recognizing that being human is messy, and momentum beats discipline.</p>
+            <p style="font-size: 18px; color: var(--text-muted); font-style: italic;">Most apps punish you for being human. 1% Club doesn't.</p>
+            <div class="button-group">
+                <a href="https://1pct-club-app.vercel.app" target="_blank" class="cta-button">Try the Live App →</a>
+            </div>
+        </div>
+
+        <!-- Slide 16: Resources (SIMPLIFIED) -->
+        <div class="slide centered">
+            <h2>See It In Action</h2>
+            <p style="font-size: 18px; color: var(--text-muted); margin: 40px 0;">The complete prototype is live and interactive. All core features fully functional.</p>
+            <a href="https://1pct-club-app.vercel.app" target="_blank" class="cta-button" style="max-width: 400px; margin: 40px auto; display: inline-block;">
+                Open Live App →
+            </a>
+            <p style="font-size: 14px; color: var(--text-muted); margin-top: 40px;">Explore onboarding, daily tracking, pods, reports, paywall, and metrics dashboard.</p>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" onclick="previousSlide()">← Previous</button>
+        <button class="nav-btn" onclick="nextSlide()">Next →</button>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = document.querySelectorAll('.slide').length;
+
+        function showSlide(n) {
+            const slides = document.querySelectorAll('.slide');
+            
+            if (n > totalSlides) currentSlide = 1;
+            if (n < 1) currentSlide = totalSlides;
+            
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[currentSlide - 1].classList.add('active');
+            
+            document.getElementById('current').textContent = currentSlide;
+            
+            const progress = (currentSlide / totalSlides) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function nextSlide() {
+            currentSlide++;
+            showSlide(currentSlide);
+        }
+
+        function previousSlide() {
+            currentSlide--;
+            showSlide(currentSlide);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') previousSlide();
+        });
+
+        showSlide(currentSlide);
+    </script>
+</body>
+</html>
